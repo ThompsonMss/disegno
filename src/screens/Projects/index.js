@@ -35,16 +35,12 @@ const Projects = (props) => {
             setProjects(aux);
         });
         setLoading(false);
-
+        console.tron.log(projects);
     };
 
-    /*React.useEffect(() => {
-        let userId = firebase.auth().currentUser;
-        firebase.database().ref('projects').child(userId.uid).once('value', snapshot => {
-            //projects.push(snapshot.val());
-            setProjects(snapshot.val());
-        });
-    }, []);*/
+    React.useEffect(() => {
+        searchRegisters();
+    }, []);
 
     return (
         <>

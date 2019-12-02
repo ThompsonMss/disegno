@@ -21,7 +21,10 @@ const NewProject = (props) => {
                 setStateButton(false);
                 let userId = firebase.auth().currentUser;
 
-                firebase.database().ref('projects').child(userId.uid).push().set({
+                let refKey = firebase.database().ref('projects').child(userId.uid).push();
+                let key = refKey.key;
+                refKey.set({
+                    key: key,
                     name: name,
                     createdAt: new Date().getTime()
                 });
@@ -36,7 +39,10 @@ const NewProject = (props) => {
                 setStateButton(false);
                 let userId = firebase.auth().currentUser;
 
-                firebase.database().ref('projects').child(userId.uid).push().set({
+                let refKey = firebase.database().ref('projects').child(userId.uid).push();
+                let key = refKey.key;
+                refKey.set({
+                    key: key,
                     name: name,
                     collaborator: email,
                     createdAt: new Date().getTime()
