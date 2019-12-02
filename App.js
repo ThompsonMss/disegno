@@ -1,21 +1,6 @@
 import React from 'react';
+import Navigators from './src/navigators';
 
-import {StyleSheet, View, Text} from 'react-native';
-
-const App = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Disegno.</Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
+const App = () => <Navigators />;
 
 export default App;
