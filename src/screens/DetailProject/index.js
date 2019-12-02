@@ -25,12 +25,6 @@ const DetailProject = (props) => {
     const [modalVisible, setModalVisible] = React.useState(false); 
     const [nameProcess, setNameProcess] = React.useState('');
 
-    const process = [
-        { id: 1, name: 'Inicial' },
-        { id: 2, name: 'Development' },
-        { id: 3, name: 'Concluido' },
-    ];
-
     const key = props.navigation.getParam('key');
     const name = props.navigation.getParam('name');
 
@@ -42,12 +36,18 @@ const DetailProject = (props) => {
             ]);
         }else{
             let userId = firebase.auth().currentUser;
-            let refProcess = firebase.database().ref('projects').child(userId).child(key).child('process').push();
+            let refProcess = firebase.database().ref('projects').child(userId.uid).child(key).child('process').push();
             let keyProcess = refProcess.key;
             refProcess.set({
                 key: keyProcess,
                 name: nameProcess,
             });
+            Alert.alert('Sucesso', 'Processo Salvo', [
+                {text: 'OK', onPress: () => null}
+            ]);
+            setModalVisible(false);
+            setNameProcess('');
+
         }
     };
 
