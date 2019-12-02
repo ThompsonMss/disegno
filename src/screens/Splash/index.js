@@ -11,13 +11,13 @@ const Splash = (props) => {
 
     const [loading, setLoading] = React.useState('');
 
-    setInterval(() => {
+    setTimeout(() => {
         setLoading('Verificando alguns dados...');
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 props.navigation.dispatch(ResetAction('Projects'));
             } else {
-                props.navigation.navigate('Main');
+                props.navigation.dispatch(ResetAction('SingIn'));
             }
         });
     }, 1500);
