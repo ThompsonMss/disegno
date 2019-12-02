@@ -21,7 +21,6 @@ import firebase from '../../connections/firebaseConnection';
 const Projects = (props) => {
 
     const [projects, setProjects] = React.useState([]);
-
     const [loading, setLoading] = React.useState(false);
 
     const searchRegisters = () => {
@@ -40,6 +39,14 @@ const Projects = (props) => {
     React.useEffect(() => {
         searchRegisters();
     }, []);
+
+    const handleDetailProject = (project) => {
+        props.navigation.navigate('DetailProject', {
+            createdAt: project.createdAt,
+            key: project.key,
+            name: project.name
+        });
+    };
 
     return (
         <>
@@ -62,7 +69,7 @@ const Projects = (props) => {
                             return (
                                 <CardProjects
                                     title={item.name}
-                                    action={() => alert(item.key)}
+                                    action={() => handleDetailProject(item)}
                                 />
                             );
                         }}

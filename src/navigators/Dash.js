@@ -1,10 +1,10 @@
-import {createAppContainer} from 'react-navigation';
-import {createDrawerNavigator} from 'react-navigation-drawer';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
-import Home from '../screens/Home';
+import DetailProject from '../screens/DetailProject';
 
 export default createAppContainer(createDrawerNavigator({
-    Home: {
-        screen: Home
+    DetailProject: {
+        screen: DetailProject
     }
 }));
