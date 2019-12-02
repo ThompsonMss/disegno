@@ -1,17 +1,29 @@
 import React from 'react';
+import {Modal, View, Text, TouchableHighlight, Alert} from 'react-native';
 import {
     Container,
     Header,
     Title,
     ContainerProcess,
     ButtonProcess,
-    TextButton
+    TextButton,
+    ContainerModal,
+    ContentModal,
+    TextForm,
+    InputForm,
+    TextModal,
+    ButtonModal
 
 } from './styles';
 
 import CardProcess from '../../components/CardProcess';
 
+import firebase from '../../connections/firebaseConnection';
+
 const DetailProject = (props) => {
+
+    const [modalVisible, setModalVisible] = React.useState(false); 
+    const [nameProcess, setNameProcess] = React.useState('');
 
     const process = [
         { id: 1, name: 'Inicial' },
@@ -21,6 +33,23 @@ const DetailProject = (props) => {
 
     const key = props.navigation.getParam('key');
     const name = props.navigation.getParam('name');
+
+
+    const handleNewProcess = () => {
+        if(nameProcess === ''){
+            Alert.alert('Opa', 'Insira um nome para o processo', [
+                {text: 'OK', onPress: () => null}
+            ]);
+        }else{
+            let userId = firebase.auth().currentUser;
+            let refProcess = firebase.database().ref('projects').child(userId).child(key).child('process').push();
+            let keyProcess = refProcess.key;
+            refProcess.set({
+                key: keyProcess,
+                name: nameProcess,
+            });
+        }
+    };
 
     return (
         <Container>
@@ -37,9 +66,30 @@ const DetailProject = (props) => {
             >
                 <CardProcess></CardProcess>
             </ContainerProcess>
-            <ButtonProcess>
+            <ButtonProcess onPress={() => setModalVisible(true)} >
                 <TextButton>Criar Processo</TextButton>
             </ButtonProcess>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            
+            >
+                <ContainerModal style={{marginTop: 22, height: 300}}>
+                    <ContentModal>
+                        <TextForm>Qual nome do processo?</TextForm>
+                        <InputForm value={nameProcess} onChangeText={txt => setNameProcess(txt)}  />
+
+                        <ButtonModal
+                            onPress={handleNewProcess}
+                        >
+                            <TextModal>Salvar</TextModal>
+                        </ButtonModal>
+                    </ContentModal>
+                </ContainerModal>
+            </Modal>
         </Container>
     );
 };
