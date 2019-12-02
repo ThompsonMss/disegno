@@ -20,11 +20,12 @@ const NewProject = (props) => {
             if (email == '') {
                 setStateButton(false);
                 let userId = firebase.auth().currentUser;
-                console.tron.log('iD:', userId.uid);
+
                 firebase.database().ref('projects').child(userId.uid).push().set({
                     name: name,
                     createdAt: new Date().getTime()
                 });
+
                 setStateButton(true);
                 Alert.alert('Sucesso!', 'Seu projeto já foi criando!', [
                     { text: 'OK', onPress: () => null }
@@ -34,13 +35,13 @@ const NewProject = (props) => {
             } else {
                 setStateButton(false);
                 let userId = firebase.auth().currentUser;
-                console.tron.log('iD:', userId.uid);
-                firebase.database().ref('projects').push().set({
-                    admin: userId.uid,
+
+                firebase.database().ref('projects').child(userId.uid).push().set({
                     name: name,
-                    createdAt: new Date().getTime(),
-                    collaborator: email
+                    collaborator: email,
+                    createdAt: new Date().getTime()
                 });
+
                 setStateButton(true);
                 Alert.alert('Sucesso!', 'Seu projeto já foi criando!', [
                     { text: 'OK', onPress: () => null }
