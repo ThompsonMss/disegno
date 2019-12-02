@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, View, Text, TouchableHighlight, Alert} from 'react-native';
+import { Modal, View, Text, TouchableHighlight, Alert } from 'react-native';
 import {
     Container,
     Header,
@@ -12,7 +12,9 @@ import {
     TextForm,
     InputForm,
     TextModal,
-    ButtonModal
+    ButtonModal,
+    ContainerEmpty,
+    TextEmpty
 
 } from './styles';
 
@@ -22,19 +24,20 @@ import firebase from '../../connections/firebaseConnection';
 
 const DetailProject = (props) => {
 
-    const [modalVisible, setModalVisible] = React.useState(false); 
+    const [modalVisible, setModalVisible] = React.useState(false);
     const [nameProcess, setNameProcess] = React.useState('');
+    const [haveProcess, setHaveProcess] = React.useState(true);
 
     const key = props.navigation.getParam('key');
     const name = props.navigation.getParam('name');
 
 
     const handleNewProcess = () => {
-        if(nameProcess === ''){
+        if (nameProcess === '') {
             Alert.alert('Opa', 'Insira um nome para o processo', [
-                {text: 'OK', onPress: () => null}
+                { text: 'OK', onPress: () => null }
             ]);
-        }else{
+        } else {
             let userId = firebase.auth().currentUser;
             let refProcess = firebase.database().ref('projects').child(userId.uid).child(key).child('process').push();
             let keyProcess = refProcess.key;
@@ -43,13 +46,42 @@ const DetailProject = (props) => {
                 name: nameProcess,
             });
             Alert.alert('Sucesso', 'Processo Salvo', [
-                {text: 'OK', onPress: () => null}
+                { text: 'OK', onPress: () => null }
             ]);
             setModalVisible(false);
             setNameProcess('');
 
         }
     };
+
+    const EmptyProcess = () => (
+        <ContainerEmpty>
+            <TextEmpty>
+                Nenhum processo encontrado.
+            </TextEmpty>
+        </ContainerEmpty>
+    );
+
+    //Recuperando Processos
+
+    //const [listProcess, setListProcess] = React.useState([]);
+    let listProcess = [];
+
+    const getProcess = () => {
+        let userId = firebase.auth().currentUser;
+        const arrProcess = [];
+        firebase.database().ref('projects').child(userId.uid).child(key).child('process').once('value', snapshot => {
+            snapshot.forEach(value => {
+                arrProcess.push({ key: value.val().key, name: value.val().name });
+            });
+        });
+
+        //setListProcess(arrProcess);
+    };
+
+    React.useEffect(() => {
+        getProcess();
+    }, []);
 
     return (
         <Container>
@@ -58,13 +90,12 @@ const DetailProject = (props) => {
                     {name}
                 </Title>
                 <Title size={20} color="#999">
-                    Seus Processos
+                    Seus processos
                 </Title>
             </Header>
             <ContainerProcess
                 horizontal={true}
             >
-                <CardProcess></CardProcess>
             </ContainerProcess>
             <ButtonProcess onPress={() => setModalVisible(true)} >
                 <TextButton>Criar Processo</TextButton>
@@ -75,12 +106,12 @@ const DetailProject = (props) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}
-            
+
             >
-                <ContainerModal style={{marginTop: 22, height: 300}}>
+                <ContainerModal style={{ marginTop: 22, height: 300 }}>
                     <ContentModal>
                         <TextForm>Qual nome do processo?</TextForm>
-                        <InputForm value={nameProcess} onChangeText={txt => setNameProcess(txt)}  />
+                        <InputForm value={nameProcess} onChangeText={txt => setNameProcess(txt)} />
 
                         <ButtonModal
                             onPress={handleNewProcess}

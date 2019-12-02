@@ -83,3 +83,15 @@ export const InputForm = styled.TextInput`
     font-size: 20;
     color: #999;
 `;
+
+//Empty
+
+export const ContainerEmpty = styled.View`
+    width: 100%;
+    justify-content: center;
+`;
+
+export const TextEmpty = styled.Text`
+    color: #999;
+    font-size: 15;
+`;
