@@ -16,20 +16,36 @@ import {
 import backgroundImg from '../../assets/images/headerProjects.png';
 
 import CardProjects from '../../components/CardProjects';
-
-const message = [
-    'Crie suas próprias metodologias',
-    'Seus projetos organizados de forma eficiente',
-    'Tire seu projeto do papel e coloque aqui de forma alinhada'
-];
-
-const projects = [
-    { id: 1, title: 'App Teste', status: 'Em andamento' },
-    { id: 2, title: 'Site Ambev', status: 'Em andamento' },
-    { id: 3, title: 'Modulo Financeiro', status: 'Pausado' },
-];
+import firebase from '../../connections/firebaseConnection';
 
 const Projects = (props) => {
+
+    const [projects, setProjects] = React.useState([]);
+
+    const [loading, setLoading] = React.useState(false);
+
+    const searchRegisters = () => {
+        setLoading(true);
+        let userId = firebase.auth().currentUser;
+        firebase.database().ref('projects').child(userId.uid).once('value', snapshot => {
+            const aux = [];
+            snapshot.forEach(value => {
+                aux.push(value.val());
+            });
+            setProjects(aux);
+        });
+        setLoading(false);
+
+    };
+
+    /*React.useEffect(() => {
+        let userId = firebase.auth().currentUser;
+        firebase.database().ref('projects').child(userId.uid).once('value', snapshot => {
+            //projects.push(snapshot.val());
+            setProjects(snapshot.val());
+        });
+    }, []);*/
+
     return (
         <>
             <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -38,21 +54,24 @@ const Projects = (props) => {
                     source={backgroundImg}
                 >
                     <Capa>
-                        <Text>Crie suas próprias metodologias</Text>
+                        <Text>Seus projetos estão todos aqui!</Text>
                     </Capa>
                 </ImageView>
                 <ContainerFlatList>
                     <FlatList
+                        refreshing={loading}
+                        onRefresh={searchRegisters}
                         data={projects}
+                        extraData={projects}
                         renderItem={({ item }) => {
                             return (
                                 <CardProjects
-                                    title={item.title}
+                                    title={item.name}
                                     action={() => alert('Projeto X')}
                                 />
                             );
                         }}
-                        keyExtrator={item => item.id}
+                        keyExtrator={item => item.createdAt}
                         horizontal={false}
                         numColumns={2}
                     />

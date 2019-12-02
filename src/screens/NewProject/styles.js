@@ -14,31 +14,6 @@ export const Text = styled.Text`
     margin-top: 50;
 `;
 
-export const StepsContainer = styled.View`
-    height: 120;
-    margin-top: 30;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-`;
-
-export const Step = styled.View`
-    width: 60;
-    height: 60;
-    margin-right: 10;
-    margin-left: 10;
-    border-radius: 50;
-    border-width: 2;
-    border-color: ${props => props.color};
-    justify-content: center;
-    align-items: center;
-`;
-
-export const StepText = styled.Text`
-    color: ${props => props.color};
-    font-size: 20;
-`;
-
 export const TextForm = styled.Text`
     padding-left: 50;
     padding-right: 50;

@@ -1,39 +1,69 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
-import { Container, Text, StepsContainer, Step, StepText, TextForm, InputForm, Options, TextOptions } from './styles';
+import { Alert, ActivityIndicator } from 'react-native';
+import { Container, Text, TextForm, InputForm, Options, TextOptions } from './styles';
+
+import firebase from '../../connections/firebaseConnection';
 
 const NewProject = (props) => {
 
+    const [stateButton, setStateButton] = useState(true);
+
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleRegister = () => {
         if (name === '') {
-            Alert.alert('Opa!', 'Precisamos do seu nome.', [
+            Alert.alert('Opa!', 'Precisamos do nome do projeto', [
                 { text: 'OK', onPress: () => null }
             ]);
         } else {
-            props.navigation.navigate('RegisterTwo', { name })
+            if (email == '') {
+                setStateButton(false);
+                let userId = firebase.auth().currentUser;
+                console.tron.log('iD:', userId.uid);
+                firebase.database().ref('projects').child(userId.uid).push().set({
+                    name: name,
+                    createdAt: new Date().getTime()
+                });
+                setStateButton(true);
+                Alert.alert('Sucesso!', 'Seu projeto já foi criando!', [
+                    { text: 'OK', onPress: () => null }
+                ]);
+                setName('');
+                setEmail('');
+            } else {
+                setStateButton(false);
+                let userId = firebase.auth().currentUser;
+                console.tron.log('iD:', userId.uid);
+                firebase.database().ref('projects').push().set({
+                    admin: userId.uid,
+                    name: name,
+                    createdAt: new Date().getTime(),
+                    collaborator: email
+                });
+                setStateButton(true);
+                Alert.alert('Sucesso!', 'Seu projeto já foi criando!', [
+                    { text: 'OK', onPress: () => null }
+                ]);
+                setName('');
+                setEmail('');
+            }
         }
     };
 
     return (
         <Container>
-            <Text>Boa! Você está perto de começar teus projetos topzera!</Text>
-            <StepsContainer>
-                <Step color="#ff0">
-                    <StepText color="#ff0">1º</StepText>
-                </Step>
-                <Step color="#999">
-                    <StepText color="#999">2º</StepText>
-                </Step>
-                <Step color="#999">
-                    <StepText color="#999">3º</StepText>
-                </Step>
-            </StepsContainer>
-            <TextForm>Qual é seu nome?</TextForm>
+            <Text>Criando nosso projeto fera!</Text>
+            <TextForm>Qual nome do seu projeto?</TextForm>
             <InputForm value={name} onChangeText={text => setName(text)} />
+            <TextForm>Você pode adicionar colaborador no seu projeto. Qual email dele?</TextForm>
+            <InputForm value={email} onChangeText={text => setEmail(text)} />
             <Options onPress={handleRegister}>
-                <TextOptions>Avante</TextOptions>
+                {
+                    stateButton === true
+                        ? (<TextOptions>Criando</TextOptions>)
+                        : (<ActivityIndicator size="small" color="#f27e63" />)
+                }
             </Options>
         </Container>
     );
