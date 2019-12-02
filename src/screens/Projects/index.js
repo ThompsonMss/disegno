@@ -35,7 +35,6 @@ const Projects = (props) => {
             setProjects(aux);
         });
         setLoading(false);
-        console.tron.log(projects);
     };
 
     React.useEffect(() => {
@@ -63,7 +62,7 @@ const Projects = (props) => {
                             return (
                                 <CardProjects
                                     title={item.name}
-                                    action={() => alert('Projeto X')}
+                                    action={() => alert(item.key)}
                                 />
                             );
                         }}
