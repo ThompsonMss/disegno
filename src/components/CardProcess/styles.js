@@ -107,3 +107,15 @@ export const TextAction = styled.Text`
     color: #eee;
     font-size: 18;
 `;
+
+//Empty
+
+export const ContainerEmpty = styled.View`
+    width: 100%;
+    justify-content: center;
+`;
+
+export const TextEmpty = styled.Text`
+    color: #999;
+    font-size: 15;
+`;

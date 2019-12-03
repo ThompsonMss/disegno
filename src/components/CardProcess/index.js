@@ -14,7 +14,9 @@ import {
     Desc,
     Action,
     TextAction,
-    ContainerCard
+    ContainerCard,
+    ContainerEmpty,
+    TextEmpty
 } from './styles';
 
 import firebase from '../../connections/firebaseConnection';
@@ -75,6 +77,14 @@ export default function CardProcess(props) {
         getTasks();
     }, []);
 
+    const EmptyTaks = () => (
+        <ContainerEmpty>
+            <TextEmpty>
+                Nenhuma tarefa encontrada.
+            </TextEmpty>
+        </ContainerEmpty>
+    );
+
     return (
         <Container>
             <ContainerHeader>
@@ -100,6 +110,7 @@ export default function CardProcess(props) {
                     </ContainerInput>
                 )}
                 <ContainerCard
+                    ListEmptyComponent={() => <EmptyTaks />}
                     data={listTasks}
                     renderItem={({ item }) => (
                         <CardFature>
