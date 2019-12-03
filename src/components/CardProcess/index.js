@@ -29,6 +29,7 @@ export default function CardProcess(props) {
     //Recuperando Chaves
     const keyProcess = props.keyProcess;
     const keyProject = props.keyProject;
+    const keyProxProcess = props.keyProx;
 
     //Salvando Tarefa no Processo
     const handleNewTasks = () => {
@@ -64,7 +65,7 @@ export default function CardProcess(props) {
         const arrTasks = [];
         await firebase.database().ref('projects').child(userId.uid).child(keyProject).child('process')
             .child(keyProcess)
-            .child('tasks').once('value', snapshot => {
+            .child('tasks').on('value', snapshot => {
                 snapshot.forEach(value => {
                     arrTasks.push({ key: value.val().key, desc: value.val().desc });
                 });
@@ -85,7 +86,28 @@ export default function CardProcess(props) {
         </ContainerEmpty>
     );
 
-    console.tron.log(`Processo ${props.name}: key original - ${keyProcess} \n key prox - ${props.keyProx}`);
+    //Concluido Tarefa e passando para o proximo processo
+    const handleConclusedTask = async (key, desc) => {
+        let userId = firebase.auth().currentUser;
+        //Deletando
+        await firebase.database().ref('projects').child(userId.uid)
+            .child(keyProject).child('process').child(keyProcess)
+            .child('tasks').child(key).remove();
+        //Add prox
+        let refTasks = await firebase.database().ref('projects').child(userId.uid)
+            .child(keyProject).child('process').child(keyProxProcess)
+            .child('tasks').push();
+        let keyTasks = refTasks.key;
+        refTasks.set({
+            key: keyTasks,
+            desc: desc
+        });
+
+        getTasks();
+
+    };
+
+    //console.tron.log(`Processo ${props.name}: key original - ${keyProcess} \n key prox - ${props.keyProx}`);
 
     return (
         <Container>
@@ -117,7 +139,9 @@ export default function CardProcess(props) {
                     renderItem={({ item }) => (
                         <CardFature>
                             <Desc>{item.desc}</Desc>
-                            <Action>
+                            <Action
+                                onPress={() => handleConclusedTask(item.key, item.desc)}
+                            >
                                 <TextAction>x</TextAction>
                             </Action>
                         </CardFature>

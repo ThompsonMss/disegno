@@ -26,7 +26,6 @@ const DetailProject = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
     const [nameProcess, setNameProcess] = React.useState('');
-    const [haveProcess, setHaveProcess] = React.useState(true);
 
     const key = props.navigation.getParam('key');
     const name = props.navigation.getParam('name');
