@@ -50,7 +50,7 @@ const DetailProject = (props) => {
             ]);
             setModalVisible(false);
             setNameProcess('');
-
+            getProcess();
         }
     };
 
@@ -67,10 +67,10 @@ const DetailProject = (props) => {
     const [listProcess, setListProcess] = React.useState([]);
     //let listProcess = [];
 
-    const getProcess = () => {
-        let userId = firebase.auth().currentUser;
+    let userId = firebase.auth().currentUser;
+    const getProcess = async () => {
         const arrProcess = [];
-        firebase.database().ref('projects').child(userId.uid).child(key).child('process').once('value', snapshot => {
+        await firebase.database().ref('projects').child(userId.uid).child(key).child('process').once('value', snapshot => {
             snapshot.forEach(value => {
                 arrProcess.push({ key: value.val().key, name: value.val().name });
             });
@@ -98,8 +98,8 @@ const DetailProject = (props) => {
                 data={listProcess}
                 renderItem={({ item }) => <Title color="#fff" size={30}>Entrou</Title>}
                 keyExtractor={item => item.name}
-            >
-            </ContainerProcess>
+                ListEmptyComponent={() => <EmptyProcess />}
+            />
             <ButtonProcess onPress={() => setModalVisible(true)} >
                 <TextButton>Criar Processo</TextButton>
             </ButtonProcess>
