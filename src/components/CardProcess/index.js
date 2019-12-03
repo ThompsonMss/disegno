@@ -85,6 +85,8 @@ export default function CardProcess(props) {
         </ContainerEmpty>
     );
 
+    console.tron.log(`Processo ${props.name}: key original - ${keyProcess} \n key prox - ${props.keyProx}`);
+
     return (
         <Container>
             <ContainerHeader>

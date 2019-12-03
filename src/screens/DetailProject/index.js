@@ -76,8 +76,12 @@ const DetailProject = (props) => {
             });
         });
 
-        for (let i = 0; i < auxProcess.length; i++) {
-            arrProcess[i].keyProx = auxProcess[i + 1].key;
+        if (auxProcess.length > 1) {
+            for (let i = 0; i < auxProcess.length; i++) {
+                arrProcess[i].keyProx = auxProcess[i + 1].key;
+                setListProcess(arrProcess);
+            }
+        } else {
             setListProcess(arrProcess);
         }
     };
