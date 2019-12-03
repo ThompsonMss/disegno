@@ -15,8 +15,6 @@ export const Container = styled.View`
 export const ContainerHeader = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    padding-right: 10;
-    padding-left: 10;
     margin-bottom: 10; 
 `;
 
@@ -83,7 +81,6 @@ export const CardFature = styled.View`
     border-radius: 5;
     padding-top: 5;
     padding-left: 5;
-    padding-right: 5;
     padding-bottom: 5;
     margin-bottom: 10;
     flex-direction: row;
@@ -96,6 +93,17 @@ export const Desc = styled.Text`
     font-size: 15;
 `;
 
-export const Action = styled.TouchableOpacity``;
+export const Action = styled.TouchableOpacity`
+    background: #000;
+    height: 40;
+    width: 30;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5;
+    border-bottom-right-radius: 5;
+`;
 
-export const TextAction = styled.Text``;
+export const TextAction = styled.Text`
+    color: #eee;
+    font-size: 18;
+`;
