@@ -64,7 +64,7 @@ const NewProject = (props) => {
             <TextForm>Qual nome do seu projeto?</TextForm>
             <InputForm value={name} onChangeText={text => setName(text)} />
             <TextForm>Você pode adicionar colaborador no seu projeto. Qual email dele?</TextForm>
-            <InputForm value={email} onChangeText={text => setEmail(text)} />
+            <InputForm editable={false} value={email} onChangeText={text => setEmail(text)} />
             <Options onPress={handleRegister}>
                 {
                     stateButton === true
