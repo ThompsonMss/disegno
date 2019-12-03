@@ -103,7 +103,12 @@ const DetailProject = (props) => {
                 horizontal={true}
                 data={listProcess}
                 renderItem={({ item }) => (
-                    <CardProcess keyProcess={item.key} keyProject={key} name={item.name} keyProx={item.keyProx} />
+                    <CardProcess
+                        keyProcess={item.key}
+                        keyProject={key}
+                        name={item.name}
+                        keyProx={item.keyProx}
+                    />
                 )}
                 keyExtractor={item => item.name}
                 ListEmptyComponent={() => <EmptyProcess />}

@@ -94,14 +94,14 @@ export default function CardProcess(props) {
             .child(keyProject).child('process').child(keyProcess)
             .child('tasks').child(key).remove();
         //Add prox
-        let refTasks = await firebase.database().ref('projects').child(userId.uid)
+        /*let refTasks = await firebase.database().ref('projects').child(userId.uid)
             .child(keyProject).child('process').child(keyProxProcess)
             .child('tasks').push();
         let keyTasks = refTasks.key;
         refTasks.set({
             key: keyTasks,
             desc: desc
-        });
+        });*/
 
         getTasks();
 
