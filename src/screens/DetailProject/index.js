@@ -63,9 +63,7 @@ const DetailProject = (props) => {
     );
 
     //Recuperando Processos
-
     const [listProcess, setListProcess] = React.useState([]);
-    //let listProcess = [];
 
     let userId = firebase.auth().currentUser;
     const getProcess = async () => {
@@ -96,7 +94,9 @@ const DetailProject = (props) => {
             <ContainerProcess
                 horizontal={true}
                 data={listProcess}
-                renderItem={({ item }) => <Title color="#fff" size={30}>Entrou</Title>}
+                renderItem={({ item }) => (
+                    <CardProcess keyProcess={item.key} keyProject={key} name={item.name} />
+                )}
                 keyExtractor={item => item.name}
                 ListEmptyComponent={() => <EmptyProcess />}
             />
