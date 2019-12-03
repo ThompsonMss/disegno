@@ -75,3 +75,18 @@ export const TextButton = styled.Text`
     font-size: 20;
     color: #fff;
 `;
+
+
+//Empty
+
+export const ContainerEmpty = styled.View`
+    width: 100%;
+    justify-content: center;
+`;
+
+export const TextEmpty = styled.Text`
+    color: #999;
+    font-size: 18;
+    text-align: center;
+    margin-top: 20;
+`;

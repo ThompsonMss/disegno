@@ -10,7 +10,9 @@ import {
     ContainerActions,
     ButtonNewProject,
     ButtonLogout,
-    TextButton
+    TextButton,
+    ContainerEmpty,
+    TextEmpty
 } from './styles';
 
 import backgroundImg from '../../assets/images/headerProjects.png';
@@ -48,6 +50,17 @@ const Projects = (props) => {
         });
     };
 
+    const EmptyProject = () => (
+        <ContainerEmpty>
+            <TextEmpty>
+                Nenhum projeto encontrado.
+            </TextEmpty>
+            <TextEmpty>
+                Clique no botão abaixo para começar! :)
+            </TextEmpty>
+        </ContainerEmpty>
+    );
+
     return (
         <>
             <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -62,6 +75,7 @@ const Projects = (props) => {
                 <ContainerFlatList>
                     <FlatList
                         refreshing={loading}
+                        ListEmptyComponent={() => <EmptyProject />}
                         onRefresh={searchRegisters}
                         data={projects}
                         extraData={projects}
