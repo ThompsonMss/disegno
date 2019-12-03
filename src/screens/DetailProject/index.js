@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, TouchableHighlight, Alert } from 'react-native';
+import { Modal, View, Text, TouchableHighlight, Alert, FlatList } from 'react-native';
 import {
     Container,
     Header,
@@ -64,8 +64,8 @@ const DetailProject = (props) => {
 
     //Recuperando Processos
 
-    //const [listProcess, setListProcess] = React.useState([]);
-    let listProcess = [];
+    const [listProcess, setListProcess] = React.useState([]);
+    //let listProcess = [];
 
     const getProcess = () => {
         let userId = firebase.auth().currentUser;
@@ -76,7 +76,7 @@ const DetailProject = (props) => {
             });
         });
 
-        //setListProcess(arrProcess);
+        setListProcess(arrProcess);
     };
 
     React.useEffect(() => {
@@ -95,6 +95,9 @@ const DetailProject = (props) => {
             </Header>
             <ContainerProcess
                 horizontal={true}
+                data={listProcess}
+                renderItem={({ item }) => <Title color="#fff" size={30}>Entrou</Title>}
+                keyExtractor={item => item.name}
             >
             </ContainerProcess>
             <ButtonProcess onPress={() => setModalVisible(true)} >

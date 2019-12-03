@@ -21,8 +21,9 @@ export const Title = styled.Text`
     font-size: ${props => props.size};
 `;
 
-export const ContainerProcess = styled.ScrollView`
+export const ContainerProcess = styled.FlatList`
     flex: 3;
+    background: #161616;
 `;
 
 export const ButtonProcess = styled.TouchableOpacity`
