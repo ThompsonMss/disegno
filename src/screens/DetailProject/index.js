@@ -68,13 +68,18 @@ const DetailProject = (props) => {
     let userId = firebase.auth().currentUser;
     const getProcess = async () => {
         const arrProcess = [];
+        const auxProcess = [];
         await firebase.database().ref('projects').child(userId.uid).child(key).child('process').once('value', snapshot => {
             snapshot.forEach(value => {
                 arrProcess.push({ key: value.val().key, name: value.val().name });
+                auxProcess.push({ key: value.val().key, name: value.val().name });
             });
         });
 
-        setListProcess(arrProcess);
+        for (let i = 0; i < auxProcess.length; i++) {
+            arrProcess[i].keyProx = auxProcess[i + 1].key;
+            setListProcess(arrProcess);
+        }
     };
 
     React.useEffect(() => {
@@ -95,7 +100,7 @@ const DetailProject = (props) => {
                 horizontal={true}
                 data={listProcess}
                 renderItem={({ item }) => (
-                    <CardProcess keyProcess={item.key} keyProject={key} name={item.name} />
+                    <CardProcess keyProcess={item.key} keyProject={key} name={item.name} keyProx={item.keyProx} />
                 )}
                 keyExtractor={item => item.name}
                 ListEmptyComponent={() => <EmptyProcess />}
