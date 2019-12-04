@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const CardView = styled.View`
     flex 1;
     width: 45%;
-    height: 130;
+    height: 150;
     background: #222;
     border-radius: 5;
     margin-top: 10;
@@ -20,6 +20,21 @@ export const CardView = styled.View`
 export const Text = styled.Text`
     color: #999;
     font-size: 18;
+    text-align: center;
+`;
+
+export const ContainerImage = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10;
+    margin-bottom: 10;
+`;
+
+export const Image = styled.Image`
+    width: 50;
+    height: 50;
+    border-radius: 50;
 `;
 
 export const Button = styled.TouchableOpacity`

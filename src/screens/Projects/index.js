@@ -82,6 +82,7 @@ const Projects = (props) => {
                         renderItem={({ item }) => {
                             return (
                                 <CardProjects
+                                    avatar={item.key}
                                     title={item.name}
                                     action={() => handleDetailProject(item)}
                                 />
