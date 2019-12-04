@@ -9,6 +9,16 @@ export const Content = styled.View`
     align-items: center;
     margin-top: 20;
     margin-bottom: 60;
+    background: #000;
+    margin-top: 10;
+    margin-left: 10;
+    margin-bottom: 10;
+    margin-right: 10;
+    padding-left: 10;
+    padding-right: 10;
+    padding-top: 10;
+    padding-bottom: 10;
+    border-radius: 5;
 `;
 
 export const Text = styled.Text`
