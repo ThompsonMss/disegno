@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     Scroll,
     SafeArea,
@@ -15,9 +14,7 @@ import logotipo from '../../assets/images/logotipo.png';
 
 import firebase from '../../connections/firebaseConnection';
 
-const arr = [{ id: 1 }, { id: 2 }];
-
-export default function CustonDrawer() {
+export default function CustonDrawer(props) {
 
     //Recuperando Projetos
     const [projects, setProjects] = React.useState([]);
@@ -32,9 +29,16 @@ export default function CustonDrawer() {
         });
     };
 
+    const handleDetailProject = (project) => {
+        props.navigation.navigate('DetailProject', {
+            createdAt: project.createdAt,
+            key: project.key,
+            name: project.name
+        });
+    };
+
     React.useEffect(() => {
         getProjects();
-        console.tron.log('Lista', projects);
     }, []);
 
     return (
@@ -47,7 +51,9 @@ export default function CustonDrawer() {
             <FlatList
                 data={projects}
                 renderItem={({ item }) => (
-                    <ButtonProject>
+                    <ButtonProject
+                        onPress={() => handleDetailProject(item)}
+                    >
                         <ImageProject
                             source={{ uri: `https://api.adorable.io/avatars/285/${item.key}.png` }}
                         />

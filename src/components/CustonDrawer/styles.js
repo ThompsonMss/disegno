@@ -32,6 +32,7 @@ export const ButtonProject = styled.TouchableOpacity`
 export const ImageProject = styled.Image`
     width: 50;
     height: 50;
+    border-radius: 50;
 `;
 
 export const NameProject = styled.Text`
