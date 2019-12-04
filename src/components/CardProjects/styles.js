@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const CardView = styled.View`
     flex 1;
     width: 45%;
-    height: 150;
+    height: 180;
     background: #222;
     border-radius: 5;
     margin-top: 10;
